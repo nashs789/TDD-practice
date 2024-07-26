@@ -7,14 +7,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudyTest {
 
     @Test
-    void create() {
+    @DisplayName("ヽ(^。^)丿 스터디 만들기")
+    void create_new_study() {
         Study study = new Study();
         assertNotNull(study);
     }
 
     @Test
     @Disabled
-    void anotherCreate() {
+    void create_new_study_again() {
         Study study = new Study();
         assertNotNull(study);
     }

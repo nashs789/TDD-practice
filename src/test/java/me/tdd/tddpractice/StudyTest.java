@@ -1,15 +1,22 @@
 package me.tdd.tddpractice;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.JRE;
+import org.junit.jupiter.api.condition.OS;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 class StudyTest {
 
     @Test
     @DisplayName("ヽ(^。^)丿 스터디 만들기")
+    @Tag("fast")
     void create_new_study() {
         Study study = new Study(-1);
         assertAll(
@@ -21,6 +28,7 @@ class StudyTest {
 
     @Test
     @DisplayName("(°͈̅\u200B ᢐ °͈̅) 스터디 만들기")
+    @Tag("slow")
     // @Disabled
     void create_new_study_again() {
         IllegalArgumentException except = assertThrows(IllegalArgumentException.class, () -> new Study(-10));
@@ -34,6 +42,23 @@ class StudyTest {
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> {
             new Study(10);
             Thread.sleep(300);
+        });
+    }
+
+    @Test
+    @EnabledOnOs({OS.MAC, OS.LINUX})
+    @EnabledOnJre({JRE.JAVA_17, JRE.JAVA_21})
+    void env() {
+        String env = System.getenv("TEST_ENV");
+
+        // assumeTrue("LOCAL".equalsIgnoreCase(env));
+
+        assumingThat("LOCAL".equalsIgnoreCase(env), () -> {
+            // local 일 때
+        });
+
+        assumingThat("PROD".equalsIgnoreCase(env), () -> {
+            // prod 일 때
         });
     }
 
